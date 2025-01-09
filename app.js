@@ -5,10 +5,11 @@ const port = process.env.PORT || 3000;
 const notFound = require("./middlewares/notFound.js");
 const errorsHandler = require("./middlewares/errorsHandler.js");
 const movieRouter = require("./routers/movieRouter.js");
-app.use(errorsHandler);
+
+app.use(express.static("public"));
 app.use(
   cors({
-    origin: process.env.CORS_ORIGINM,
+    origin: process.env.CORS_ORIGIN,
   })
 );
 
@@ -19,7 +20,8 @@ app.get("/", (req, res) => {
 app.use("/api/movies", movieRouter);
 
 app.use(notFound);
-app.use(express.static("public"));
+
+app.use(errorsHandler);
 app.listen(port, () => {
   console.log(`server runnin on port ${port}`);
 });
